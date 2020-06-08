@@ -1,1 +1,1 @@
-cassandra deploying toturial
+## CASSANDRA - FAST START
