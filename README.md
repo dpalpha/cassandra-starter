@@ -1,1 +1,1 @@
-## CASSANDRA - FAST START
+## CASSANDRA - quick starter
