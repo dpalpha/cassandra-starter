@@ -1,4 +1,4 @@
-## CASSANDRA - quick starter
+## CASSANDRA - QUICK STARTER
 
 ### install db 1. way
 ```{bash}
