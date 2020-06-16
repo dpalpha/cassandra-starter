@@ -113,5 +113,6 @@ which pip3
 CASS_DRIVER_NO_CYTHON=1 pip3 install cassandra-driver
 pip3 install notebook
 CLASS_DRIVER_NO_CYTHON=1 pip3 install cassandra-driver
-```
 ipython install kernel --user --env ENV
+```
+
