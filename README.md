@@ -1,18 +1,19 @@
-## CASSANDRA - QUICK STARTER
+# Cassandra database - starter
+* deploying on cluster
 
-### install db 1. way
+
+### install from binaries or
 ```{bash}
-docker
-wget http://ftp.man.poznan.pl/apache/cassandra/3.11.4/apache-cassandra-3.11.4-bin.tar.gz
 
+wget http://ftp.man.poznan.pl/apache/cassandra/3.11.4/apache-cassandra-3.11.4-bin.tar.gz
 tar -tgvz apache-cassandra-3.11.4-bin.tar.gz
 tar -vxf apache-cassandra-3.11.4-bin.tar.gz
-
 mv apache-cassandra-3.11.4 cassandra
 tree cassandra/bin
+
 ```
 
-### install db 2. way
+### install install from docker registry 
 ```{bash}
 docker pull cassandra
 docker image ls
@@ -102,8 +103,6 @@ docekr exec -it cas1 /bin/bash
 docker kill cas2
 docker rm cas2
 ```
-
-
 
 ### integration ipython
 ```{bash}
