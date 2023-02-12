@@ -1,8 +1,13 @@
-# Cassandra DB - STARTER
+# CASSANDRA DB - STARTER
 ![image](https://cassandra.apache.org/assets/img/logo-white.svg)
 
-
-## install from binaries 
+## install from docker registry 
+```{bash}
+docker pull cassandra
+docker image ls 
+docker ps -a
+```
+## another way install from binaries 
 ```{bash}
 wget http://ftp.man.poznan.pl/apache/cassandra/3.11.4/apache-cassandra-3.11.4-bin.tar.gz
 tar -tgvz apache-cassandra-3.11.4-bin.tar.gz
@@ -11,21 +16,14 @@ mv apache-cassandra-3.11.4 cassandra
 tree cassandra/bin
 ```
 
-
-## install from docker registry 
-```{bash}
-docker pull cassandra
-docker image ls 
-docker ps -a
-```
 ### how to run this
 ```{bash}
 docker run -d --name cas1 cassandra
 docker exec -it cas1 /bin/bash
 ```
 
-## work with CQLSH
-### create keyspace 
+## CQLSH
+### CREATE KEYSPACE
 
 ```{bash}
 cqlsh "CREATE KEYSPACE ex1 WITH replication ={'class': 'SimpleStrategy', 'replication_factor':1};"
@@ -70,45 +68,11 @@ cqlsh "consistency ONE"
 cqlsh "consistency QUORUM"
 ```
 
+
 ![image](https://www.baeldung.com/wp-content/uploads/2021/09/CassandraConsistency1-818x1024.png)
 
 
-
-### extra setings 
-```{bash}
-
-cassandra-stress write n=100000
-nodetool flush
-docker run -d --name cas2 -e CASSANDRA_SEEDS=172.17.0.2 cassandra
-
-#nodetool cleanup
-#nodetool ring
-#nodetool ring | grep -i 172.17.0.2 | wc -l
-#nodetool ring | grep -i 172.17.0.3 | wc -l
-#nodetool ring | grep Normal | wc -l
-#nodetool repair -pr
-```
-
-### run as ring
-
-```{bash}
-
-docker run -d --name cas2 -e CASSANDRA_SEEDS=172.17.0.2 cassandra
-
-// container cas1
-docekr exec -it cas1 /bin/bash
-
-// container cas2
-docekr exec -it cas1 /bin/bash
-
-# upser replace insert node to ring
-
-# exit
-docker kill cas2
-docker rm cas2
-```
-
-### run on python
+## run on api python
 ```{bash}
 python3.5 -m venv ENV
 source ENV/bin/activate
@@ -118,16 +82,13 @@ pip3 install notebook
 CLASS_DRIVER_NO_CYTHON=1 pip3 install cassandra-driver
 ipython install kernel --user --env ENV
 ```
-
-
-
+### API PYTHON EXP 1
 ```{python}
-
 from cassandra.cluster import Cluster
 from cassandra import ConsistencyLevel
 from cassandra.query import SimpleStatement
 
-user = "Oracle"
+user = "sudo"
 cluster=Cluster(['172.17.0.2'])
 session=cluster.connect()
 session.default_consistency_level = ConsistencyLevel.LOCAL_QUORUM
@@ -146,11 +107,14 @@ for n in res:
     
 ALTER TABLE scores ADD addrs list<frozen<map<text,text>>>;
 
+```
 
+### API PYTHON EXP 2
+```{python}
 from cassandra.cluster import Cluster
 from cassandra import ConsistencyLevel
 from cassandra.query import SimpleStatement
-user = "Oracle"
+user = "sudo"
 addrs = [{"city":"WAW",
           'woj': 'malrsz',
           'bui': '10'}]
@@ -172,8 +136,10 @@ for i in res:
     addrs = i.addrs[0]
     print(addrs)
 
+```
 
-
+### API PYTHON EXP 3
+```{python}
 import time
 from cassandra.cluster import Cluster
 from cassandra import ConsistencyLevel
@@ -193,11 +159,9 @@ for user in users:
     took = time.time()-start
     res.add_callback(my_callback)
     print('Assync :', took*1000)
-
 ```
 
-
-
+### API PYTHON EXP 4
 ```{python}
 from cassandra.cluster import Cluster
 from cassandra import ConsistencyLevel
@@ -301,3 +265,36 @@ if __name__ == "__main__":
     main()
 ```
 
+### extra setings 
+```{bash}
+
+cassandra-stress write n=100000
+nodetool flush
+docker run -d --name cas2 -e CASSANDRA_SEEDS=172.17.0.2 cassandra
+
+#nodetool cleanup
+#nodetool ring
+#nodetool ring | grep -i 172.17.0.2 | wc -l
+#nodetool ring | grep -i 172.17.0.3 | wc -l
+#nodetool ring | grep Normal | wc -l
+#nodetool repair -pr
+```
+
+### run as ring
+
+```{bash}
+
+docker run -d --name cas2 -e CASSANDRA_SEEDS=172.17.0.2 cassandra
+
+// container cas1
+docekr exec -it cas1 /bin/bash
+
+// container cas2
+docekr exec -it cas1 /bin/bash
+
+# upser replace insert node to ring
+
+# exit
+docker kill cas2
+docker rm cas2
+```
