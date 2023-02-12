@@ -72,7 +72,7 @@ cqlsh "consistency QUORUM"
 ![image](https://www.baeldung.com/wp-content/uploads/2021/09/CassandraConsistency1-818x1024.png)
 
 
-## run on api python
+## PREP API PYTHON
 ```{bash}
 python3.5 -m venv ENV
 source ENV/bin/activate
